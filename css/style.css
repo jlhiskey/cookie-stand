@@ -1,0 +1,47 @@
+
+  header {
+    font-family: "Goudy Bookletter 1911", sans-serif;
+    color: #393636;
+    text-align:left;
+    margin: 20px;
+    
+  }
+  body {
+    background: #050101 url("https://www.warnerbros.com/archive/spacejam/movie/cmp/souvenirs/img/poster-daffy.gif") no-repeat center;
+    font-family: "Goudy Bookletter 1911", sans-serif;
+    text-align:left;
+  }
+    h1 {
+      color: whitesmoke;
+      width: 1000px;
+      border: 15px solid #393636 ;
+      border-left-style: groove;
+      border-right-style: hidden ;
+      padding-left: 30px;
+      margin-left: 0px;
+      text-shadow: 2px 2px #393636;
+      text-align:left;
+  }
+  
+  h2 {
+    color: whitesmoke;
+      width: 185px;
+      border: 25px solid #040202 ;
+      border-left-style: groove;
+      border-right-style:  hidden ;
+      padding-left: 25px;
+      margin-right: 75px;
+      text-shadow: 2px 2px #393636;
+}
+main {
+  color: whitesmoke;
+      width: 750px;
+      border: 25px solid #070505 ;
+      border-left-style: groove;
+      border-right-style:  hidden ;
+      padding-bottom: 50px;
+      padding-left: 5px;
+      margin: 20px;
+      text-shadow: 1px 1px #393636;
+}
+
