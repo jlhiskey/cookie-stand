@@ -1,62 +1,82 @@
 'use strict';
+//----------Global Variables--------------------------------------------------------------------------------------
+
 var storeHours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
 
-// // 1st and Pike.
-var firstPike = {
-  minimumCust: 23,
-  maximumCust: 65,
-  avgCookiesCust: 6.3,
-  custPerHour: [],
-  soldPerHour: [],
-  totalSold: 0,
+//----------Store Locations--------------------------------------------------------------------------------------
 
-  randomCustPerHour: function () {
+//----------1st and Pike-----------------------------------------------------------------------------------------
+
+var firstandPike = {
+  minCust: 23,
+  maxCust: 65,
+  avgcookiesperCust: 6.3,
+  custperHour: [],
+  soldperHour: [],
+  totalcookiesSold: 0,
+
+  //----------Calculates Random Customers Per Hour------------------------------------------------------------------
+
+  randcustperHour: function () {
     for (var i = 0; i < storeHours.length; i++) {
-      var custPerHourInt = Math.random() * (this.maximumCust - this.minimumCust) + this.minimumCust;
-      custPerHourInt = Math.round(custPerHourInt);
-      this.custPerHour.push(custPerHourInt);
+      var custperhourInt = Math.random() * (this.maxCust - this.minCust) + this.minCust;
+      custperhourInt = Math.round(custperhourInt);
+      this.custperHour.push(custperhourInt);
     }
   },
 
-  cookiesPerHour: function () {
-    var avgCookiesCalc = 0;
+//----------Calculates Cookies Per Hour----------------------------------------------------------------------------
+
+  cookiesperHour: function () {
+    var avgcookiesCalc = 0;
     for (var i = 0; i < storeHours.length; i++) {
-      avgCookiesCalc = Math.floor(this.custPerHour[i] * this.avgCookiesCust);
-      this.soldPerHour.push(avgCookiesCalc);
+      avgcookiesCalc = Math.floor(this.custperHour[i] * this.avgcookiesperCust);
+      this.soldperHour.push(avgcookiesCalc);
     }
   },
 
-  totalCookiesSold: function () {
+//----------Calculates Cookies Per Day---------------------------------------------------------------------------------
+
+  totalcookiesSold: function () {
     var cookiesSoldCalc = 0;
     for (var i = 0; i < storeHours.length; i++) {
-      cookiesSoldCalc += this.soldPerHour[i];
+      cookiesSoldCalc += this.soldperHour[i];
     }
-    this.totalSold = cookiesSoldCalc;
+    this.totalcookiesSold = cookiesSoldCalc;
   },
 
-  renderSales: function () {
-    // Access the parent element from the DOM.
+//----------Renders Cookies per hour on HTML------------------------------------------------------------------------
+
+  showSales: function () {
+
     var ulElem = document.getElementById('first-pike');
     for (var i = 0; i < storeHours.length; i++) {
-      // 1. Create element.
       var listItemElem = document.createElement('li');
-      // 2. Give it content.
-      listItemElem.innerHTML = storeHours[i] + ':<br> ' + this.soldPerHour[i] + ' cookies';
-      //3. Append it to the DOM.
+      listItemElem.innerHTML = storeHours[i] + ':<br> ' + this.soldperHour[i] + ' cookies';
       ulElem.appendChild(listItemElem);
     }
   }
 };
-function callFirstPike() {
-  firstPike.randomCustPerHour();
-  firstPike.cookiesPerHour();
-  firstPike.totalCookiesSold();
-  firstPike.renderSales();
-}
-callFirstPike();
+
+//----------Renders Total Cookies per hour on HTML-----------------------------------------------------------------
 
 var ulElem = document.getElementById('first-pike');
 var listItemElem = document.createElement('li');
-listItemElem.textContent = 'Total: ' + firstPike.totalSold;
+listItemElem.textContent = 'Total: ' + firstandPike.totalcookiesSold;
 ulElem.appendChild(listItemElem);
+
+//----------Merges All Functions to Shows on HTML------------------------------------------------------------------
+
+function callFirstPike() {
+  firstandPike.randcustperHour();
+  firstandPike.cookiesperHour();
+  firstandPike.totalcookiesSold();
+  firstandPike.showSales();
+}
+
+//----------Calls Functions to Render on HTML---------------------------------------------------------------------
+
+callFirstPike();
+
+
 
