@@ -2,81 +2,103 @@
 //----------Global Variables--------------------------------------------------------------------------------------
 
 var storeHours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
+ 
+//----------Global Prototype Methods-----------------------------------------------------------------------------------------
 
-//----------Store Locations--------------------------------------------------------------------------------------
+ //----------Calculates Cookies Per Hour----------------------------------------------------------------------------
 
-//----------1st and Pike-----------------------------------------------------------------------------------------
+ storeConstructor.prototype.cookiesperHour = function () {
+  var avgcookiesCalc = 0;
+  for (var i = 0; i < this.storeHours.length; i++) {
+    avgcookiesCalc = Math.ceil(this.custperHour[i] * this.avgcookiesperCust);
+    this.soldperHour.push(avgcookiesCalc);
+  }
 
-var firstandPike = {
-  minCust: 23,
-  maxCust: 65,
-  avgcookiesperCust: 6.3,
-  custperHour: [],
-  soldperHour: [],
-  totalcookiesSold: 0,
+//----------Calculates Random Customers Per Hour------------------------------------------------------------------
 
-  //----------Calculates Random Customers Per Hour------------------------------------------------------------------
-
-  randcustperHour: function () {
-    for (var i = 0; i < storeHours.length; i++) {
+  storeConstructor.prototype.randcustperHour = function () {
+    for (var i = 0; i < this.storeHours.length; i++) {
       var custperhourInt = Math.random() * (this.maxCust - this.minCust) + this.minCust;
       custperhourInt = Math.round(custperhourInt);
       this.custperHour.push(custperhourInt);
     }
-  },
 
-  //----------Calculates Cookies Per Hour----------------------------------------------------------------------------
+//----------Calculates Random Customers Per Hour------------------------------------------------------------------
 
-  cookiesperHour: function () {
-    var avgcookiesCalc = 0;
-    for (var i = 0; i < storeHours.length; i++) {
-      avgcookiesCalc = Math.floor(this.custperHour[i] * this.avgcookiesperCust);
-      this.soldperHour.push(avgcookiesCalc);
+  storeConstructor.prototype.randcustperHour = function () {
+    for (var i = 0; i < this.storeHours.length; i++) {
+      var custperhourInt = Math.random() * (this.maxCust - this.minCust) + this.minCust;
+      custperhourInt = Math.round(custperhourInt);
+      this.custperHour.push(custperhourInt);
     }
-  },
+    }; 
 
-  //----------Calculates Cookies Per Day---------------------------------------------------------------------------------
+//----------Calculates Cookies Per Day---------------------------------------------------------------------------------
 
-  totalcookiesSold: function () {
-    var cookiesSoldCalc = 0;
-    for (var i = 0; i < storeHours.length; i++) {
-      cookiesSoldCalc += this.soldperHour[i];
+storeConstructor.prototype.totalcookiesSold= function () {
+  var cookiesSoldCalc = 0;
+  for (var i = 0; i < this.storeHours.length; i++) {
+    cookiesSoldCalc += this.soldperHour[i];
     }
-    this.totalcookiesSold = cookiesSoldCalc;
-  },
-
-  //----------Renders Cookies per hour on HTML------------------------------------------------------------------------
-
-  showSales: function () {
-
-    var ulElem = document.getElementById('first-pike');
-    for (var i = 0; i < storeHours.length; i++) {
-      var listItemElem = document.createElement('li');
-      listItemElem.innerHTML = storeHours[i] + ':<br> ' + this.soldperHour[i] + ' cookies';
-      ulElem.appendChild(listItemElem);
-    }
-  }
+  this.totalcookiesSold = cookiesSoldCalc;
 };
 
-//----------Merges All Functions to Shows on HTML------------------------------------------------------------------
+//----------Store Constructor--------------------------------------------------------------------------------------
 
-function callFirstPike() {
-  firstandPike.randcustperHour();
-  firstandPike.cookiesperHour();
-  firstandPike.totalcookiesSold();
-  firstandPike.showSales();
+
+
+function storeConstructor(storeName, htmlID, storeHours, minCust, maxCust, avgcookiesperCust) {
+
+  this.storeName = storeName;
+  this.htmlID = htmlID;
+  this.storeHours = storeHours;
+  this.minCust = minCust;
+  this.maxCust = maxCust;
+  this.avgcookiesperCust = avgcookiesperCust;
+  this.custperHour = [],
+  this. soldperHour = [],
+  this.totalcookiesSold= 0,
+
+ 
+
+
+
+    //----------Renders Cookies per hour on HTML------------------------------------------------------------------------
+
+    this.showSales = function () {
+
+      var ulElem = document.getElementById(this.htmlID);
+      for (var i = 0; i < this.storeHours.length; i++) {
+        var listItemElem = document.createElement('li');
+        listItemElem.innerHTML = this.storeHours[i] + ':<br> ' + this.soldperHour[i] + ' cookies';
+        ulElem.appendChild(listItemElem);
+      }
+    };
+  };
+
+  //----------Merges All Functions to Shows on HTML------------------------------------------------------------------
+
+  function callFirstPike() {
+    firstandPike.randcustperHour();
+    firstandPike.cookiesperHour();
+    firstandPike.totalcookiesSold();
+    firstandPike.showSales();
+  }
+
+  //----------Calls Functions to Render on HTML---------------------------------------------------------------------
+
+  callFirstPike();
+
+  //----------Renders Total Cookies per hour on HTML-----------------------------------------------------------------
+
+  var ulElem = document.getElementById('first-pike');
+  var listItemElem = document.createElement('li');
+  listItemElem.textContent = 'Total: ' + firstandPike.totalcookiesSold;
+  ulElem.appendChild(listItemElem);
 }
 
-//----------Calls Functions to Render on HTML---------------------------------------------------------------------
 
-callFirstPike();
-
-//----------Renders Total Cookies per hour on HTML-----------------------------------------------------------------
-
-var ulElem = document.getElementById('first-pike');
-var listItemElem = document.createElement('li');
-listItemElem.textContent = 'Total: ' + firstandPike.totalcookiesSold;
-ulElem.appendChild(listItemElem);
+//----------1st and Pike-----------------------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------------------------------------------
 //----------SeaTac Airport-----------------------------------------------------------------------------------------

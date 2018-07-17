@@ -2,19 +2,22 @@ body {
   background-color: #924536;
   color: black;
   margin: 0 50px;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 header {
   background-color: #924536;
-  border: 3px solid #C25642;
-  font-family: fantasy;
+  border: 7px solid #C25642;
+  color: white;
+  font-family: 'Merienda', cursive;
   margin-top: 2em;
 }
 
 #salmon-image {
   border: 0px ;
   height: 200px;
-  padding: 3px;
+  padding-left: 70px;
+  padding-top: 70px;
   transform: rotate(-2deg);
   vertical-align: center;
 }
@@ -22,7 +25,8 @@ header {
 h1 {
   display: float;
   font-size: 60px;
-  padding: 1em 2.5em;
+  padding: 1em 1em;
+  text-align: center;
 }
 
 #nav {
@@ -31,7 +35,7 @@ h1 {
 }
 
 #site-nav {
-  font-family: fantasy;
+ 
 }
 
 a {
@@ -42,11 +46,6 @@ main {
   margin-top: 1em;
 }
 
-li {
-  font-family: "Gill Sans", sans-serif;
-  font-size: 18px
-}
-
 h2 {
   font-family: fantasy;
 }
@@ -54,13 +53,14 @@ h2 {
 #location, #hours, #contactinfo, #aboutus {
   background-color: #C24F3A;
   border: 3px solid #924436;
-  color: white;
+  color: black;
   display: inline-block;
   height: 100px;
   padding: 1em;
   vertical-align: middle;
-
+  
 }
+
 #location {
   line-height: 2em;
   width: 40%;
@@ -74,4 +74,19 @@ h2 {
   font-size: 13px;
   margin-top: 3em;
   text-align: center;
+  
+}
+
+#headertext {
+  
+  font-size: 20px;
+  margin-top: 3em;
+  text-align: center;
+  padding: .5em;
+}
+
+li {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  color: rgb(43, 41, 41);
 }
