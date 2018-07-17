@@ -13,7 +13,6 @@ var firstandPike = {
   avgcookiesperCust: 6.3,
   custperHour: [],
   soldperHour: [],
-  totalcookiesSold: 0,
 
   //----------Calculates Random Customers Per Hour------------------------------------------------------------------
 
@@ -87,7 +86,6 @@ var seaTac = {
   avgcookiesperCust: 1.2,
   custperHour: [],
   soldperHour: [],
-  totalcookiesSold: 0,
 
   //----------Calculates Random Customers Per Hour------------------------------------------------------------------
 
@@ -147,8 +145,8 @@ callseaTac();
 
 //----------Renders Total Cookies per hour on HTML-----------------------------------------------------------------
 
-var ulElem = document.getElementById('sea-tac');
-var listItemElem = document.createElement('li');
+ulElem = document.getElementById('sea-tac');
+listItemElem = document.createElement('li');
 listItemElem.textContent = 'Total: ' + seaTac.totalcookiesSold;
 ulElem.appendChild(listItemElem);
 
@@ -161,7 +159,6 @@ var seaCenter = {
   avgcookiesperCust: 3.7,
   custperHour: [],
   soldperHour: [],
-  totalcookiesSold: 0,
 
   //----------Calculates Random Customers Per Hour------------------------------------------------------------------
 
@@ -221,8 +218,8 @@ callseaCenter();
 
 //----------Renders Total Cookies per hour on HTML-----------------------------------------------------------------
 
-var ulElem = document.getElementById('sea-center');
-var listItemElem = document.createElement('li');
+ulElem = document.getElementById('sea-center');
+listItemElem = document.createElement('li');
 listItemElem.textContent = 'Total: ' + seaCenter.totalcookiesSold;
 ulElem.appendChild(listItemElem);
 
@@ -235,7 +232,7 @@ var capHill = {
   avgcookiesperCust: 2.3,
   custperHour: [],
   soldperHour: [],
-  totalcookiesSold: 0,
+
 
   //----------Calculates Random Customers Per Hour------------------------------------------------------------------
 
@@ -295,8 +292,8 @@ callcapHill();
 
 //----------Renders Total Cookies per hour on HTML-----------------------------------------------------------------
 
-var ulElem = document.getElementById('capitol-hill');
-var listItemElem = document.createElement('li');
+ulElem = document.getElementById('capitol-hill');
+listItemElem = document.createElement('li');
 listItemElem.textContent = 'Total: ' + capHill.totalcookiesSold;
 ulElem.appendChild(listItemElem);
 
@@ -309,7 +306,7 @@ var alkiBeach = {
   avgcookiesperCust: 4.6,
   custperHour: [],
   soldperHour: [],
-  totalcookiesSold: 0,
+
 
   //----------Calculates Random Customers Per Hour------------------------------------------------------------------
 
@@ -369,7 +366,7 @@ callalkiBeach();
 
 //----------Renders Total Cookies per hour on HTML-----------------------------------------------------------------
 
-var ulElem = document.getElementById('alki-beach');
-var listItemElem = document.createElement('li');
+ulElem = document.getElementById('alki-beach');
+listItemElem = document.createElement('li');
 listItemElem.textContent = 'Total: ' + alkiBeach.totalcookiesSold;
 ulElem.appendChild(listItemElem);
