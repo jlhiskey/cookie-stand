@@ -1,47 +1,77 @@
-
-  header {
-    font-family: "Goudy Bookletter 1911", sans-serif;
-    color: #393636;
-    text-align:left;
-    margin: 20px;
-    
-  }
-  body {
-    background: #050101 url("https://www.warnerbros.com/archive/spacejam/movie/cmp/souvenirs/img/poster-daffy.gif") no-repeat center;
-    font-family: "Goudy Bookletter 1911", sans-serif;
-    text-align:left;
-  }
-    h1 {
-      color: whitesmoke;
-      width: 1000px;
-      border: 15px solid #393636 ;
-      border-left-style: groove;
-      border-right-style: hidden ;
-      padding-left: 30px;
-      margin-left: 0px;
-      text-shadow: 2px 2px #393636;
-      text-align:left;
-  }
-  
-  h2 {
-    color: whitesmoke;
-      width: 185px;
-      border: 25px solid #040202 ;
-      border-left-style: groove;
-      border-right-style:  hidden ;
-      padding-left: 25px;
-      margin-right: 75px;
-      text-shadow: 2px 2px #393636;
+body {
+  background-color: #924536;
+  color: black;
+  margin: 0 50px;
 }
+
+header {
+  background-color: #924536;
+  border: 3px solid #C25642;
+  font-family: fantasy;
+  margin-top: 2em;
+}
+
+#salmon-image {
+  border: 0px ;
+  height: 200px;
+  padding: 3px;
+  transform: rotate(-2deg);
+  vertical-align: center;
+}
+
+h1 {
+  display: float;
+  font-size: 60px;
+  padding: 1em 2.5em;
+}
+
+#nav {
+  display: inline-block;
+  line-height: 30px;
+}
+
+#site-nav {
+  font-family: fantasy;
+}
+
+a {
+  text-decoration: none;
+}
+
 main {
-  color: whitesmoke;
-      width: 750px;
-      border: 25px solid #070505 ;
-      border-left-style: groove;
-      border-right-style:  hidden ;
-      padding-bottom: 50px;
-      padding-left: 5px;
-      margin: 20px;
-      text-shadow: 1px 1px #393636;
+  margin-top: 1em;
 }
 
+li {
+  font-family: "Gill Sans", sans-serif;
+  font-size: 18px
+}
+
+h2 {
+  font-family: fantasy;
+}
+
+#location, #hours, #contactinfo, #aboutus {
+  background-color: #C24F3A;
+  border: 3px solid #924436;
+  color: white;
+  display: inline-block;
+  height: 100px;
+  padding: 1em;
+  vertical-align: middle;
+
+}
+#location {
+  line-height: 2em;
+  width: 40%;
+  height: 250px;
+}
+
+
+
+#footer {
+  border: 3px solid #C25642;
+  font-size: 13px;
+  margin-top: 3em;
+  text-align: center;
+}

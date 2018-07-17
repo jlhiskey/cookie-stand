@@ -2,23 +2,58 @@
 <html>
 <head>
   <title>Document</title>
+  <link rel="stylesheet" href="css/reset.css" type="text/css" />
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 </head>
 <body>
   <header>
-    <h1>Hello</h1>
-    <nav class="main-nav">
-      <ul>
-        <li>home</li>
-      </ul>
+    <img src="img/salmon.png" id="salmon-image" alt="picture of salmon" />
+    <h1>Pat's Famous Salmon Cookies</h1>
+    <p>Nothing screams welcome to Seattle like Pat's Famous Salmon Cookies. <br>
+    Not only will you love the creamy rich fish flavor that will overwhelm your taste buds faster that a Mongol horde overtaking Asia, but you cats will love it too.</p>
+    <nav id="nav">
+        <ul>
+            <li id="site-nav"><a href="#locations">Cookie Locations</a></li>
+            <li id="site-nav"><a href="#hours">Store Hours</a></li>
+            <li id="site-nav"><a href="#contactinfo">Contact Us</a></li>
+            <li id="site-nav"><a href="#aboutus">About Us</a></li>
+        </ul>
     </nav>
-  </header>
-  <main class="container">
-    <section id="months" class="main-content">
-      <h2>Welcome to the main content</h2>
+</header>
+<main>
+  <section id="location">
+      <h2>Locations</h2>
+      
+      <ul>
+          <li>&bull; 1st and Pike</li>
+          <li>&bull; SeaTac Airport</li>
+          <li>&bull; Seattle Center</li>
+          <li>&bull; Capitol Hill</li>
+          <li>&bull; Alki</li>
+      </ul>
+  </section>
+  <section id="hours">
+      <h2>Store Hours:</h2>
+      <p>Open Everyday from 6am to 8pm!!</p>
+      
+  </section>
+  <section id="contactinfo">
+    <h2>Contact Info:</h2>
+    <a class="email" title="Email Pat" href="#" onclick="javascript:window.location='mailto:pat@fancyfeast.com?subject=Why Cant I Stop Vomiting&body=Please Call 911: ';">Email Us</a>
+</section>
 
-    </section>
-  </main>
-  <footer></footer>
-  <script src="app.js"></script>
+<section id="aboutus">
+  <h2>About Us:</h2>
+  <p>Before creating these wonderful pescatarian treats Pat could be found working the assembly line at Fancy Feast.</p>
+
+</section>
+
+</main>
+
+<footer id="footer">
+  <p>&copy; Jason Hiskey 2018</p>
+</footer>
+<script src="js/app.js"></script>
 </body>
 </html>
