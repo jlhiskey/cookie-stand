@@ -37,8 +37,6 @@ StoreConstructor.prototype.totalcookiesSold= function () {
 
 //----------Store Constructor--------------------------------------------------------------------------------------
 
-
-
 function StoreConstructor(storeName, htmlID, storeHours, minCust, maxCust, avgcookiesperCust) {
 
   this.storeName = storeName;
@@ -52,15 +50,8 @@ function StoreConstructor(storeName, htmlID, storeHours, minCust, maxCust, avgco
   this.totalcookiesSold= 0;
   totalLocations.push(this);
 }
-//----------Store Locations Database-------------------------------------------------------------------------------------
 
-function makestoreLocations() {
-  new StoreConstructor('First Ave and Pike St', 'first-pike', storeHours, 23, 65, 6.3);
-  new StoreConstructor('SeaTac Airport', 'sea-tac', storeHours, 3, 24, 1.2);
-  new StoreConstructor('Seattle Center', 'sea-center', storeHours, 11, 38, 3.7);
-  new StoreConstructor('Capitol Hill', 'capitol-hill', storeHours, 20, 38, 2.3);
-  new StoreConstructor('Alki Beach', 'alki-beach', storeHours, 2, 16, 4.6);
-}
+//----------Calls Store Location Database--------------------------------------------------------------------------------
 
 makestoreLocations();
 
@@ -93,10 +84,6 @@ function makeHeaderRow() {
   trEl.appendChild(thEl);
 }
 
-//--------- Runs Header function for Cookies--------------------------------------------------------------------------------
-
-makeHeaderRow();
-
 //---------- Creates a Table with Cookie Data-------------------------------------------------------------------------------
 
 function makeTableRows() {
@@ -115,13 +102,25 @@ function makeTableRows() {
     var sum = totalLocations[k].soldperHour.reduce(function (accumulator, currentValue) {
       return accumulator + currentValue;
     }, 0);
-    console.log(sum);
     tdEl = document.createElement('td');
     tdEl.textContent = sum;
     trEl.appendChild(tdEl);
   }
 }
 
-//----------Runs Table data function for Cookies-----------------------------------------------------------------------------
+//--------- Calls Header function for Cookies--------------------------------------------------------------------------------
+
+makeHeaderRow();
+//----------Calls Table data function for Cookies-----------------------------------------------------------------------------
 
 makeTableRows();
+
+//----------Store Locations Database-------------------------------------------------------------------------------------
+
+function makestoreLocations() {
+  new StoreConstructor('First Ave and Pike St', 'first-pike', storeHours, 23, 65, 6.3);
+  new StoreConstructor('SeaTac Airport', 'sea-tac', storeHours, 3, 24, 1.2);
+  new StoreConstructor('Seattle Center', 'sea-center', storeHours, 11, 38, 3.7);
+  new StoreConstructor('Capitol Hill', 'capitol-hill', storeHours, 20, 38, 2.3);
+  new StoreConstructor('Alki Beach', 'alki-beach', storeHours, 2, 16, 4.6);
+}
