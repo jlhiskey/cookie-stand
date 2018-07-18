@@ -4,7 +4,6 @@
 var tblEl;
 var storeHours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
 var totalLocations = [];
-
 //----------Store Constructor--------------------------------------------------------------------------------------
 
 function StoreConstructor(storeName, minCust, maxCust, avgcookiesperCust) {
@@ -16,7 +15,6 @@ function StoreConstructor(storeName, minCust, maxCust, avgcookiesperCust) {
   this.custperHour = [];
   this. soldperHour = [];
   this.totalcookiesSold= 0;
-
   totalLocations.push(this);
 }
 //----------Random Number Generator-----------------------------------------------------------------------------
@@ -43,13 +41,12 @@ StoreConstructor.prototype.calcSales = function () {
     this.totalcookiesSold += cookies;
   }
 };
-
 //---------- Cookie Table Methods--------------------------------------------------------------------------------------
 
 StoreConstructor.prototype.render = function() {
   this.calcSales();
+  //----------Creates a Row for Cookie Table-----------------------------------------------------
 
-  // Store Row
   var trStoreEl = document.createElement('tr');
   var tdNameEl = document.createElement('td');
   tdNameEl.textContent = this.storeName;
@@ -69,7 +66,8 @@ StoreConstructor.prototype.render = function() {
 };
 
 function createTable() {
-  // Header row
+//----------Creates a Header for Cookie Table-------------------------------------------------------------
+
   tblEl = document.createElement('table');
   var trHeaderEl = document.createElement('tr');
   var thBlankEl = document.createElement('th');
@@ -90,13 +88,6 @@ function createTable() {
 
   document.getElementById('table-content').appendChild(tblEl);
 }
-
-
-
-
-
-
-
 //----------Store Locations Database-------------------------------------------------------------------------------------
 
 new StoreConstructor('First Ave and Pike St', 23, 65, 6.3);
@@ -105,7 +96,7 @@ new StoreConstructor('Seattle Center', 11, 38, 3.7);
 new StoreConstructor('Capitol Hill', 20, 38, 2.3);
 new StoreConstructor('Alki Beach', 2, 16, 4.6);
 
-
+//-----------Calls Table--------------------------------------------------------------------------------------------
 createTable();
 
 for (var i = 0; i < totalLocations.length; i++) {
