@@ -124,3 +124,30 @@ function makestoreLocations() {
   new StoreConstructor('Capitol Hill', 'capitol-hill', storeHours, 20, 38, 2.3);
   new StoreConstructor('Alki Beach', 'alki-beach', storeHours, 2, 16, 4.6);
 }
+
+//----------Event Listeners-------------------------------------------------------------------------------------------------
+// var pClickEl = document.getElementById('p-click');
+// pClickEl.addEventListener('click', function() {
+//   console.log('Clicked!');
+// })
+
+function clicked() {
+  console.log('clicked');
+}
+
+pClickEl.addEventListenr('click', clicked);
+
+
+//form Data
+
+varformEl = document.getElementById('submit', function(event) {
+  event.preventDefault();
+});
+
+
+  var storeName = event.target.storeName.value;
+  var htmlID = event.target.htmlID.value;
+  var storeHours = event.target.storeHours.value;
+  var minCust = event.target.minCust.value;
+  var maxCust = event.target.maxCust.value;
+  var avgcookiesperCust = event.target.avgcookiesperCust.value;
