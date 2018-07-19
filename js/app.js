@@ -6,7 +6,6 @@ var storeHours =['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm
 var totalLocations=[];
 var totallocationsHour=[];
 var salesTable = document.getElementById('table-content');
-var addstoreForm = document.getElementById('main-form');
 
 //----------Store Constructor--------------------------------------------------------------------------------------
 
@@ -61,10 +60,7 @@ var eachLocationstotalcookiesSold = function (){
       hourlyTotal += totalLocations[i].soldperHour[r];
     }
     totallocationsHour.push(hourlyTotal);
-    console.log('-------------');
   }
-  console.log(totallocationsHour);
-
 };
 
 var everyOneOfThoseCookies = function(){
@@ -89,12 +85,10 @@ StoreConstructor.prototype.renderRow = function(){
   var thElement=document.createElement('th');
 
   //----------Adds Store Names to Left Column-------------
-  
   thElement.textContent = this.storeName;
   trElement.appendChild(thElement);
 
   //----------Adds Cookies Per Hour to Store Rows---------
-  
   for (var i = 0; i < storeHours.length; i++){
 
     tdElement = document.createElement('td');
@@ -102,7 +96,6 @@ StoreConstructor.prototype.renderRow = function(){
     trElement.appendChild(tdElement);
   }
   //----------Adds Total Cookies Per Day Per Store to Right Column---
-  
   tdElement = document.createElement('td');
   tdElement.textContent = this.totalcookiesSold;
   trElement.appendChild(tdElement);
@@ -159,23 +152,19 @@ StoreConstructor.rendertotalLocations = function() {
 };
 
 //----------New Store Event (sales.html)------------------------------------------------------------------------------
-
-StoreConstructor.addNewStore = function(event) {
+var addstoreForm = document.getElementById('main-form');
+addstoreForm.addEventListener('submit', function(event) {
   event.preventDefault();
-  var newStore = event.target.newStoreName.value;
-  var newminCust = parseInt(event.target.newminCust.value);
-  var newmaxCust = parseInt(event.target.newmaxCust.value);
-  var newavgcookiesperCust = parseInt (event.target.newavgcookiesperCust.value);
-  totallocationsHour = [];
-  new StoreConstructor(newStore, newminCust, newmaxCust, newavgcookiesperCust);
-  salesTable.textContent = '';
+  var storeName = event.target.storeName.value;
+  var minCust = event.target.minCust.value;
+  var maxCust = event.target.maxCust.value;
+  var avgcookiesperCust = event.target.avgcookiesperCust.value;
 
-  StoreConstructor.renderHeader();
-  StoreConstructor.rendertotalLocations();
-  eachLocationstotalcookiesSold();
-  everyOneOfThoseCookies();
-  StoreConstructor.renderFooter();
-};
+  new StoreConstructor(storeName, minCust, maxCust, avgcookiesperCust);
+  console.log('storeName', storeName);
+  console.log('Tester', event.target.storeName.value);
+  console.log('Total Locations', totalLocations);
+});
 
 //----------Existing Store Locations Database----------------------------------------------------------------------------
 
@@ -184,7 +173,7 @@ new StoreConstructor('SeaTac Airport', 3, 24, 1.2);
 new StoreConstructor ('Seattle Center', 11, 38, 2.3);
 new StoreConstructor ('Capitol Hill', 20, 38, 2.3);
 new StoreConstructor ('Alki', 2, 16, 4.6);
-addstoreForm.addEventListener('submit', StoreConstructor.addNewStore);
+
 
 //----------Active Functions---------------------------------------------------------------------------------------------
 
@@ -193,3 +182,5 @@ StoreConstructor.rendertotalLocations();
 eachLocationstotalcookiesSold();
 everyOneOfThoseCookies();
 StoreConstructor.renderFooter();
+
+
