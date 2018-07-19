@@ -4,6 +4,9 @@
 var tblEl;
 var storeHours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
 var totalLocations = [];
+var totallocationsHour=[];
+var cookieBusiness = document.getElementById('table-content');
+var cookieForm = document.getElementById('main-form');
 //----------Store Constructor--------------------------------------------------------------------------------------
 
 function StoreConstructor(storeName, minCust, maxCust, avgcookiesperCust) {
@@ -13,21 +16,19 @@ function StoreConstructor(storeName, minCust, maxCust, avgcookiesperCust) {
   this.maxCust = maxCust;
   this.avgcookiesperCust = avgcookiesperCust;
   this.custperHour = [];
+  this.customers();
   this. soldperHour = [];
-  this.totalcookiesSold= 0;
+  this.cookies();
+  this.totalcookiesSold= [];
+  this.total();
   totalLocations.push(this);
+
 }
 //----------Random Number Generator-----------------------------------------------------------------------------
 
-StoreConstructor.prototype.generateRandom = function() {
-  return Math.random() * (this.maxCust - this.minCust) + this.minCust;
-};
-//----------Calculates Random Customers Per Hour------------------------------------------------------------------
-
-StoreConstructor.prototype.randcustperHour = function () {
-  for (var i = 0; i < storeHours.length; i++) {
-    var randomValue = this.generateRandom();
-    this.custperHour.push(randomValue);
+StoreConstructor.prototype.customers = function(){
+  for (var i = 0; i < storeHours.length; i++ ){
+    this.custperHour.push(Math.round(Math.random() * (this.maxCust - this.minCust)) + this.minCust);
   }
 };
 //----------Calculates Cookies Per Hour and Total Cookies Sold----------------------------------------------------------------------------
@@ -41,11 +42,38 @@ StoreConstructor.prototype.calcSales = function () {
     this.totalcookiesSold += cookies;
   }
 };
+//----------Calculates Cumulative Value of Cookies Sold at All Locations Per Hour-------------------------------------
+var cumulativetotalperHour = function (){
+  for (var r = 0; r < storeHours.length; r++) {
+
+    var hourlyTotal = 0;
+    for (var i = 0; i < totalLocations.length; i++){
+
+      hourlyTotal += totalLocations[i].soldperHour[r];
+    }
+    totallocationsHour.push(hourlyTotal);
+    console.log('-------------');
+  }
+  console.log(totallocationsHour);
+
+};
+
+
+var allCookies = function(){
+  var cookiesForAll = 0;
+  for (var i = 0; i < totallocationsHour.length ; i++){
+
+    cookiesForAll += totallocationsHour[i];
+  }
+
+  return cookiesForAll;
+};
 //---------- Cookie Table Methods--------------------------------------------------------------------------------------
 
-StoreConstructor.prototype.render = function() {
+//----------Creates a Row for Cookie Table-----------------------------------------------------
+StoreConstructor.prototype.renderRow = function() {
   this.calcSales();
-  //----------Creates a Row for Cookie Table-----------------------------------------------------
+
 
   var trStoreEl = document.createElement('tr');
   var tdNameEl = document.createElement('td');
@@ -65,54 +93,92 @@ StoreConstructor.prototype.render = function() {
   tblEl.appendChild(trStoreEl);
 };
 
-function createTable() {
+
+
 //----------Creates a Header for Cookie Table-------------------------------------------------------------
 
-  tblEl = document.createElement('table');
-  var trHeaderEl = document.createElement('tr');
-  var thBlankEl = document.createElement('th');
-  thBlankEl.textContent = 'Store Name';
-  trHeaderEl.appendChild(thBlankEl);
+// StoreConstructor.renderHeader = function(){
+//   var trHeaderEl = document.createElement('tr');
+//   cookieBusiness.appendChild(trHeaderEl);
+//   var theBlankEl = document.createElement('th');
+//   trHeaderEl.appendChild(theBlankEl);
+//   for(var i = 0; i < storeHours.length; i++) {
+//     var thEl = document.createElement('th');
+//     thEl.textContent = storeHours[i];
+//     trHeaderEl.appendChild(thEl);
+//   }
+//   var thTotalEl = document.createElement('th');
+//   thTotalEl.textContent = 'total';
+//   trHeaderEl.appendChild(thTotalEl);
+// };
 
-  for (var idx = 0; idx < storeHours.length; idx++) {
-    var thEl = document.createElement('th');
-    thEl.textContent = storeHours[idx];
-    trHeaderEl.appendChild(thEl);
+
+// //----------Creates a Footer for Cookie Table-------------------------------------------------------------
+
+
+// StoreConstructor.renderFooter = function (){
+//   var trFooterEl = document.createElement('tr');
+
+//   var totalsNameOnBar = document.createElement('th');
+//   totalsNameOnBar.textContent = 'Totals';
+//   trFooterEl.appendChild(totalsNameOnBar);
+
+//   for (var i = 0; i < storeHours.length; i++){
+//     var totalElement = document.createElement('td');
+//     totalElement.textContent = totallocationsHour[i];
+//     trFooterEl.appendChild(totalElement);
+//   }
+
+//   var theFooter = document.createElement('td');
+//   theFooter.textContent = allCookies();
+//   trFooterEl.appendChild(theFooter);
+
+
+//   cookieBusiness.appendChild(trFooterEl);
+
+// };
+
+
+//----------Adds cookie data to table rows--------------------------------------------------------
+StoreConstructor.rendertotalLocations = function() {
+  for(var i = 0; i < totalLocations.length; i++) {
+    totalLocations[i].renderRow();
   }
+};
+//----------New Store Event (sales.html)-------------------------------------------------------------
+StoreConstructor.addNewStoreConstructor = function(event) {
+  event.preventDefault();
+  var newstoreName = event.target.newstoreName.value;
+  var newminCust = parseInt(event.target.newminCust.value);
+  var newmaxCust = parseInt(event.target.newmaxCust.value);
+  var newavgcookiesperCust = parseInt (event.target.newavgcookiesperCust.value);
+  totallocationsHour = [];
+  new StoreConstructor(newstoreName, newminCust, newmaxCust, newavgcookiesperCust);
+  cookieBusiness.textContent = '';
+  StoreConstructor.renderHeader();
+  StoreConstructor.rendertotalLocations();
+  cumulativetotalperHour();
+  allCookies();
+  StoreConstructor.renderFooter();
+};
+//----------Submit Button Event------------------------------------------------------------------------
+cookieForm.addEventListener('submit', StoreConstructor.addNewStoreConstructor);
 
-  var thTotalEl = document.createElement('th');
-  thTotalEl.textContent = 'Daily Total';
-  trHeaderEl.appendChild(thTotalEl);
+//----------Active Functions---------------------------------------------------------------------------
 
-  tblEl.appendChild(trHeaderEl);
+StoreConstructor.renderHeader();
+StoreConstructor.rendertotalLocations();
+cumulativetotalperHour();
+allCookies();
+StoreConstructor.renderFooter();
 
-  document.getElementById('table-content').appendChild(tblEl);
-}
+
+
 //----------Store Locations Database-------------------------------------------------------------------------------------
 
-new StoreConstructor('First Ave and Pike St', 23, 65, 6.3);
-new StoreConstructor('SeaTac Airport', 3, 24, 1.2);
-new StoreConstructor('Seattle Center', 11, 38, 3.7);
-new StoreConstructor('Capitol Hill', 20, 38, 2.3);
-new StoreConstructor('Alki Beach', 2, 16, 4.6);
+var pike = new StoreConstructor('1st and Pike', 23, 65, 6.3);
+var seaTac = new StoreConstructor('SeaTac Airport', 3, 24, 1.2);
+var seaC = new StoreConstructor ('Seattle Center', 11, 38, 2.3);
+var capHill = new StoreConstructor ('Capitol Hill', 20, 38, 2.3);
+var alki = new StoreConstructor ('Alki', 2, 16, 4.6);
 
-//-----------Calls Table--------------------------------------------------------------------------------------------
-createTable();
-
-for (var i = 0; i < totalLocations.length; i++) {
-  totalLocations[i].render();
-}
-
-//----------Form for adding more stores to sales.html--------------------------------------------------------------------------
-
-varformEl = document.getElementById('submit', function(event) {
-  event.preventDefault();
-});
-
-
-var storeName = event.target.storeName.value;
-var htmlID = event.target.htmlID.value;
-var storeHours = event.target.storeHours.value;
-var minCust = event.target.minCust.value;
-var maxCust = event.target.maxCust.value;
-var avgcookiesperCust = event.target.avgcookiesperCust.value;
