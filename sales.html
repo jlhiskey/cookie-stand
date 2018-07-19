@@ -13,17 +13,26 @@
   <div style="overflow-x:auto;">
     <table id="table-content"></table>
   </div>
-  <h3>Forms!</h3>
-<form id="main-form">
-  <input name="storeName" type="text" placeholder="Store Name">
-  <input name="minCust" type="number" placeholder="Minimum Customers">
-  <input name="maxCust" type="number" placeholder="Maximum Customers">
-  <input name="avgcookiesperCust" type="number" placeholder="Average Cookies/Customer">
+  <h3>Create New Store</h3>
+  <form id="main-form">
+    <fieldset>
+      <label for="newStoreName">Store Name:</label>
+      <input name="newStoreName" type="text" required>
+      
+      <label for="newMinP">Minimum amount of people:</label>
+      <input name="newMinP" type="number" required>
+      
+      <label for="newMaxP">Maximum amount of people:</label>
+      <input name="newMaxP" type="number" required>
 
-  <button type="submit" >Submit</button>
+      <label for="newAvgP"> Average amount of cookies:</label>
+      <input name="newAvgP" type="text" required>
 
+      <button>Deploy New Store</button>
+    </fieldset>
 </form>
   <script src="js/app.js"></script>
 </body>
 </html>
 
+        
