@@ -3,184 +3,137 @@
 //----------Global Variables--------------------------------------------------------------------------------------
 
 var storeHours =['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
-var totalLocations=[];
-var totallocationsHour=[];
-var salesTable = document.getElementById('table-content');
-
+var totalStores = []; //total number of stores in existence
+var sendtoTable = document.getElementById('table-content'); //sends table info to html
 //----------Store Constructor--------------------------------------------------------------------------------------
 
-function StoreConstructor(storeName,minCust,maxCust,avgcookiesperCust) {
-  this.storeName = storeName;
-  this.minCust = minCust;
-  this.maxCust = maxCust;
-  this.avgcookiesperCust = avgcookiesperCust;
-  this.custperHour = [];
-  this.customers();
-  this.soldperHour = [];
-  this.cookies();
-  this.totalcookiesSold = [];
-  this.total();
-  totalLocations.push(this);
+function Store(name, min, max, avg) { // new store builder
+  this.name = name; // user input store name
+  this.min = min; // user input min customers
+  this.max = max; // user input max customers
+  this.avg = avg; // user input cookies purchased per customer
+
+  this.cookiesperHour = []; // single stores cookies sold per hour
+  this.storeDailyTotal = 0; // single store's daily total cookies sold
+
+  totalStores.push(this); //every time a new store is created add that instance to the total stores array
+  purgeFooter();
+  this.rowData(); //every time a new store is created add a new row in the html table that shows cookies per hour and store daily total
+  makeFooter(); //runs footer function
 }
 
-//----------Random Customer Generator-----------------------------------------------------------------------------
+//----------Random Number Generator-----------------------------------------------------------------------------
+//----------Creates a random number using a defined max and min value-------------
+function getRandomInteger (min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min;
+}
 
-StoreConstructor.prototype.customers = function(){
-  for (var i = 0; i < storeHours.length; i++ ){
-    this.custperHour.push(Math.round(Math.random() * (this.maxCust - this.minCust)) + this.minCust);
+//----------Calculates Cookies Per Hour and Daily Total Per Store----------------------------------------------------------------------------
+Store.prototype.cookiesperhourperday = function() { // when .storecookiesperhour-per day is called it will add new stores sold per hour data to cookiesperHour array and will add dailyTotal cookies sold per store.
+  for (var i = 0; i < storeHours.length; i++) { // will run once for every hour the store is open
+    var randomCustomer = getRandomInteger(this.min, this.max); //creates random customer value based off of indiv. store info.
+    var customerCookie = parseInt(randomCustomer * this.avg); //multiplies random customer value with average cookie sales per customer.
+    this.cookiesperHour.push(customerCookie); // adds cookies purchased per hour at a single store to cookiesperHour array
+    this.storeDailyTotal += customerCookie; // sum of all cookies purchased at a single store in a day added to storeDailyTotal
   }
-};
-
-//----------Calculates Cookies Per Hour----------------------------------------------------------------------------
-
-StoreConstructor.prototype.cookies = function() {
-  for (var i = 0; i < storeHours.length; i++){
-    this.soldperHour.push(Math.round(this.custperHour[i] * this.avgcookiesperCust));
-  }
-};
-
-//----------Calculates Total Cookies Sold at One Store--------------------------------------------------------------
-
-StoreConstructor.prototype.total = function(){
-  var cookieAmount = 0;
-  for (var i=0; i < this.soldperHour.length; i++ ){
-    cookieAmount += this.soldperHour[i];
-  }
-  return this.totalcookiesSold.push(cookieAmount);
-};
-
-//----------Calculates Total Cookies Sold at All Stores Combined----------------------------------------------------
-
-var eachLocationstotalcookiesSold = function (){
-  for (var r = 0; r < storeHours.length; r++) {
-
-    var hourlyTotal = 0;
-    for (var i = 0; i < totalLocations.length; i++){
-
-      hourlyTotal += totalLocations[i].soldperHour[r];
-    }
-    totallocationsHour.push(hourlyTotal);
-  }
-};
-
-var everyOneOfThoseCookies = function(){
-  var cookiesForAll = 0;
-  for (var i = 0; i < totallocationsHour.length ; i++){
-
-    cookiesForAll += totallocationsHour[i];
-  }
-
-  return cookiesForAll;
-};
-
-//----------Creates Table Footer and Header on sales.html------------------------------------------------------------------
-
-//----------Creates Row----------------------------------------------------------
-
-StoreConstructor.prototype.renderRow = function(){
-  var trElement=document.createElement('tr');
-  salesTable.appendChild(trElement);
-  var tdElement=document.createElement('td');
-  salesTable.appendChild(tdElement);
-  var thElement=document.createElement('th');
-
-  //----------Adds Store Names to Left Column-------------
-  thElement.textContent = this.storeName;
-  trElement.appendChild(thElement);
-
-  //----------Adds Cookies Per Hour to Store Rows---------
-  for (var i = 0; i < storeHours.length; i++){
-
-    tdElement = document.createElement('td');
-    tdElement.textContent = this.soldperHour[i];
-    trElement.appendChild(tdElement);
-  }
-  //----------Adds Total Cookies Per Day Per Store to Right Column---
-  tdElement = document.createElement('td');
-  tdElement.textContent = this.totalcookiesSold;
-  trElement.appendChild(tdElement);
-
-  //----------Renders Data to DOM-----------------------
-  salesTable.appendChild(trElement);
 };
 
 //----------Creates Header--------------------------------------------------------------------------------------------
-
-StoreConstructor.renderHeader = function(){
-  var headerRow = document.createElement('tr');
-  salesTable.appendChild(headerRow);
-  var noBox = document.createElement('th');
-  headerRow.appendChild(noBox);
-  for(var i = 0; i < storeHours.length; i++) {
-    var timeElement = document.createElement('th');
-    timeElement.textContent = storeHours[i];
-    headerRow.appendChild(timeElement);
+function makeHeader (){ // When called it will create a header displaying store hours.
+  var header = document.getElementById('table-content'); // when makeHeader is called send info to html table location
+  var trEl = document.createElement('tr'); // when trEl is called create a new html row
+  var tdStoreNameEl = document.createElement('td'); //creates a blank cell at the beginning of the header row when called
+  tdStoreNameEl.textContent = 'Store Name'; //adds text Store Name to blank cell when called
+  trEl.appendChild(tdStoreNameEl); //adds Store Name to first cell in header row
+  for (var i in storeHours) { //runs for every hour the store is open
+    var thEl = document.createElement('th'); // when called will add header element to table
+    thEl.textContent = storeHours[i]; //adds text of storeHours array as for loop runs
+    trEl.appendChild(thEl); //creates a blank cell which is a header
+    header.appendChild(trEl); //adds tags to html when called
   }
-  var totalBox = document.createElement('th');
-  totalBox.textContent = 'total';
-  headerRow.appendChild(totalBox);
+  var tdTotalEl = document.createElement('td'); //creates a blank cell at the end of the header row when called
+  tdTotalEl.textContent = 'Total'; //adds text Total to blank cell when called
+  trEl.appendChild(tdTotalEl); //adds Total to last cell in header row
+}
+makeHeader(); // Calls Header to html
+
+//----------Creates Row Per Constructor Instance --------------------------------------------------------------------------------------------
+Store.prototype.rowData = function() { //everytime a new store is created create a new row with cookies per hour and daily total at at that instance data
+  this.cookiesperhourperday(); // runs cookiesperHour and storeDailyTotal to populate data cells
+  var trDataEl = document.createElement('tr'); //creates a row for cookiesperHour and storeDailyTotal to populate
+  var tdNameEl = document.createElement('td'); //creates a blank cell for name to populate
+  tdNameEl.textContent = this.name; //adds name from current store instance to blank cell
+  trDataEl.appendChild(tdNameEl); //adds name to first cell in row
+
+  for (var i in this.cookiesperHour) {
+    var tdCookiesperHourEl = document.createElement('td'); //creates a blank cell for cookiesperHour to populate
+    tdCookiesperHourEl.textContent = this.cookiesperHour[i]; //adds cookiesperHour array data to each new blank cell created
+    trDataEl.appendChild(tdCookiesperHourEl); //adds populated cookiesperHour data to row
+  }
+
+  var tdstoreDailyTotalEl = document.createElement('td'); //creates a blank cell for storeDailyTotal data
+  tdstoreDailyTotalEl.textContent = this.storeDailyTotal; //adds storeDailyTotal to blank cell
+  trDataEl.appendChild(tdstoreDailyTotalEl); //adds store daily total cell to table
+
+  sendtoTable.appendChild(trDataEl); //adds cookiesperHour cells and daily total cell to html
 };
 
-//----------Creates Footer--------------------------------------------------------------------------------------------
+//----------Creates A Footer Showing Total Cookies Sold at Every Hour at ALL locations---------------------------------------------
+function makeFooter() {
+  var trTotalCumulativeEl = document.createElement('tr'); //creates a row for the footer
+  trTotalCumulativeEl.id = 'footer-row'; //gives footer row html id='footer-row'
 
-StoreConstructor.renderFooter = function (){
-  var footerRow = document.createElement('tr');
+  var tdTotalsEl = document.createElement('td'); //creates a blank cell at beginning for footer row
+  tdTotalsEl.textContent = 'Totals'; //Adds text Totals to blank cell
+  trTotalCumulativeEl.appendChild(tdTotalsEl); //Adds Cell with text Totals to first cell of footer row.
 
-  var totalsNameOnBar = document.createElement('th');
-  totalsNameOnBar.textContent = 'Totals';
-  footerRow.appendChild(totalsNameOnBar);
+  //----------Total Cookies Sold Per Hour Cumulative-----------------------
+  var overallTotal = 0; //Variable that collects total of all cookies sold at all shops
+  for (var i = 0; i < storeHours.length; i++) { //runs a loop that repeats at every hour the store is open
+    var cumulativeHourlyTotal = 0; //collects values of all shops cookies per hour.
 
-  for (var i =0; i < storeHours.length; i++){
-    var totalElement = document.createElement('td');
-    totalElement.textContent = totallocationsHour[i];
-    footerRow.appendChild(totalElement);
+    for (var j = 0; j < totalStores.length; j++) {//runs a loop that repeats per instance of the store
+      cumulativeHourlyTotal += totalStores[j].cookiesperHour[i]; //looks at the total instances of the store and everytime it finds and instance it adds that specific times amount of cookies
+    }
+    var tdFooterDataEl = document.createElement('td'); //creates a blank cell in the footer row for every hour the store is open
+    tdFooterDataEl.textContent = cumulativeHourlyTotal; //Adds that value of the cumulative hourly total and adds it to every blank cell being created
+    trTotalCumulativeEl.appendChild(tdFooterDataEl);
+    overallTotal += cumulativeHourlyTotal; //Adds the hourly totals together into an overall day total
   }
+  var tdOverallTotalEl = document.createElement('td'); //creates a blank cell at the end of the footer
+  tdOverallTotalEl.textContent = overallTotal; //adds text from overallTotal to blank cell
+  trTotalCumulativeEl.appendChild(tdOverallTotalEl); //adds overallTotal cell to footer row
 
-  var theLastBox = document.createElement('td');
-  theLastBox.textContent = everyOneOfThoseCookies();
-  footerRow.appendChild(theLastBox);
+  sendtoTable.appendChild(trTotalCumulativeEl); //adds footer to HTML
+}
 
-  salesTable.appendChild(footerRow);
-};
-
-//----------Creates A Row Per Store Created Between the Header and Footer---------------------------------------------
-
-StoreConstructor.rendertotalLocations = function() {
-  for(var i = 0; i < totalLocations.length; i++) {
-    totalLocations[i].renderRow();
+//----------Purges Footer----------------------------------------------------------------------------------------
+function purgeFooter() { //when this function runs the footer is removed from the html
+  var footerRow = document.getElementById('footer-row'); // the variable looks for the html ID = 'footer-row'
+  if (footerRow) { //???????????????????????????????????????????????????
+    footerRow.remove(); //removes the element with the html id footer-row
   }
-};
-
+}
 //----------New Store Event (sales.html)------------------------------------------------------------------------------
-var addstoreForm = document.getElementById('main-form');
-addstoreForm.addEventListener('submit', function(event) {
-  event.preventDefault();
-  var storeName = event.target.storeName.value;
-  var minCust = event.target.minCust.value;
-  var maxCust = event.target.maxCust.value;
-  var avgcookiesperCust = event.target.avgcookiesperCust.value;
 
-  new StoreConstructor(storeName, minCust, maxCust, avgcookiesperCust);
-  console.log('storeName', storeName);
-  console.log('Tester', event.target.storeName.value);
-  console.log('Total Locations', totalLocations);
+var formEl = document.getElementById('main-form'); // looks for the html id main-form
+formEl.addEventListener('submit', function(event) { //when submit is clicked run event this is below
+  event.preventDefault();
+
+  var name = event.target.name.value; //name of input boxes
+  var min = event.target.min.value;
+  var max = event.target.max.value;
+  var avg = event.target.avg.value;
+
+  new Store(name, min, max, avg); //where to put the input data
 });
 
 //----------Existing Store Locations Database----------------------------------------------------------------------------
 
-new StoreConstructor('1st and Pike', 23, 65, 6.3);
-new StoreConstructor('SeaTac Airport', 3, 24, 1.2);
-new StoreConstructor ('Seattle Center', 11, 38, 2.3);
-new StoreConstructor ('Capitol Hill', 20, 38, 2.3);
-new StoreConstructor ('Alki', 2, 16, 4.6);
-
-
-//----------Active Functions---------------------------------------------------------------------------------------------
-
-StoreConstructor.renderHeader();
-StoreConstructor.rendertotalLocations();
-eachLocationstotalcookiesSold();
-everyOneOfThoseCookies();
-StoreConstructor.renderFooter();
-
-
+new Store('1st and Pike', 23, 65, 6.3);
+new Store('SeaTac Airport', 3, 24, 1.2);
+new Store ('Seattle Center', 11, 38, 2.3);
+new Store ('Capitol Hill', 20, 38, 2.3);
+new Store ('Alki', 2, 16, 4.6);
