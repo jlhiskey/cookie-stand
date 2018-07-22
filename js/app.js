@@ -5,6 +5,7 @@
 var storeHours =['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
 var totalStores = []; //total number of stores in existence
 var sendtoTable = document.getElementById('table-content'); //sends table info to html
+// var sendtoLocation = document.getElementById('location');
 //----------Store Constructor--------------------------------------------------------------------------------------
 
 function Store(name, min, max, avg) { // new store builder
@@ -27,7 +28,7 @@ function Store(name, min, max, avg) { // new store builder
 function getRandomInteger (min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min;
+  return Math.floor(Math.random() * (max - min+1)) + min;
 }
 
 //----------Calculates Cookies Per Hour and Daily Total Per Store----------------------------------------------------------------------------
@@ -112,7 +113,7 @@ function makeFooter() {
 //----------Purges Footer----------------------------------------------------------------------------------------
 function purgeFooter() { //when this function runs the footer is removed from the html
   var footerRow = document.getElementById('footer-row'); // the variable looks for the html ID = 'footer-row'
-  if (footerRow) { //???????????????????????????????????????????????????
+  if (footerRow) { //if exists then do
     footerRow.remove(); //removes the element with the html id footer-row
   }
 }
@@ -126,8 +127,14 @@ formEl.addEventListener('submit', function(event) { //when submit is clicked run
   var min = event.target.min.value;
   var max = event.target.max.value;
   var avg = event.target.avg.value;
+  
+  if ((name === '') || (min === '') || (max === '') || (avg === '' )) {
+    alert('no input detected');
+  } else {
+    new Store(name, min, max, avg); //where to put the input data
+  }
+  
 
-  new Store(name, min, max, avg); //where to put the input data
 });
 
 //----------Existing Store Locations Database----------------------------------------------------------------------------
@@ -137,3 +144,17 @@ new Store('SeaTac Airport', 3, 24, 1.2);
 new Store ('Seattle Center', 11, 38, 2.3);
 new Store ('Capitol Hill', 20, 38, 2.3);
 new Store ('Alki', 2, 16, 4.6);
+
+// //----------Store Location Names-----------------------------------------------------------------------------------
+// function makeLocations() {
+//   var ulStoreLocationEl = document.createElement('ul'); //creates an unordered list
+//   for (var i = 0; i < totalStores.length; i++) {
+//     var liStoreLocationEl = document.createElement('li'); //creates a list item
+//     liStoreLocationEl.textContent = this.name[i];
+//     ulStoreLocationEl.appendChild(liStoreLocationEl);
+//   }
+//   sendtoLocation.appendChild(ulStoreLocationEl);
+
+// }
+
+// makeLocations();
